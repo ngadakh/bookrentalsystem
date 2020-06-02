@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Listing Books{% endblock %}
+
+{% block content %}
+<br>
+<div style="width:100%;">
+    <br>
+    <b>Available Books &emsp;
+    </b>
+    <a href="{{ url_for('book.add_new_book') }}">Add New Book</a>&emsp;
+    <a href="{{ url_for('book.reserve_book') }}">Reserve Book</a>&emsp;
+    <a href="{{ url_for('book.return_book') }}">Return Book</a>
+    &emsp;<a href="{{ url_for('book.get_book_history') }}">Reserved Book History</a>&emsp;
+    <a href="{{ url_for('book.get_rent_statement') }}">Get rent statement</a>
+    <br><br>
+
+    <div id="alert">
+        {% if message %}
+        {{ message }}
+        {% endif %}
+    </div>
+    {% if books %}
+    <table>
+        <tr style="font-weight:bold">
+            <td>Serial No</td>
+            <td>Name</td>
+            <td>Author</td>
+            <td>Quantity</td>
+        </tr>
+        {% for book in books %}
+        <tr>
+            <td>{{ book.serial_no}}</td>
+            <td>{{ book.name}}</td>
+            <td>{{ book.author}}</td>
+            <td>{{ book.quantity}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+    {% else %}
+    <br>
+    No Books Found!
+    {% endif %}
+</div>
+{% endblock %}
+
+<script>
+	$(document).ready(function() {
+setTimeout(function() {
+    $('#alert').fadeOut('slow');
+}, 2000); // <-- time in milliseconds
+});
+
+</script>

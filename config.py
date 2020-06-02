@@ -27,9 +27,14 @@ class TestingConfig(Config):
     TESTING = True
 
 
+SECRET_KEY = "secretkey"
+
 DEFAULT_SERVER = '0.0.0.0'
 DEFAULT_SERVER_PORT = 5000
 LOG_FILE = os.path.join(BASEDIR, 'brs.log')
 SQLITE_PATH = os.path.join(BASEDIR, 'brs.db')
 TEST_SQLITE_PATH = os.path.join(BASEDIR, 'test_brs.db')
 
+USERS = {'admin': {'password': 'admin'}}
+DEBUG = True
+ENVIRONMENT = DevelopmentConfig

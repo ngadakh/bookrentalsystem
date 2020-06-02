@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Rent Statement{% endblock %}
+
+{% block content %}
+<br>
+<div style="width:100%;">
+    <br>
+    <b>Rent Statement &emsp;
+    </b>
+    <br><br>
+
+    <form action="{{ url_for('book.get_rent_statement') }}" method="POST" target=”_blank”>
+        <select id="customer" name="customer_id">
+            <option value="Select Customer" selected>Select Customer</option>
+            {% for customer in customers %}
+            <option value="{{ customer.id }}">{{ customer.name }}</option>
+            {% endfor %}
+        </select><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+{% endblock %}

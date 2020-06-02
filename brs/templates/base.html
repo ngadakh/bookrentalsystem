@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>{% block title %}{% endblock %} - Book Rental Store</title>
+    {% endblock %}
+    <script src="{{ url_for('static', filename='/js/jquery.min.js') }}"></script>
+</head>
+<body>
+<h1>Book Rental Store</h1>
+{% if session.username %}
+  Welcome, {{session.username}}
+  <br><br>
+  <a href="{{ url_for('book.book_listing') }}">Books Section</a>&emsp;
+  <a href="{{ url_for('customer.customer_listing') }}">Customer Section</a>&emsp;
+  <a href="{{ url_for('book.settings') }}">Settings</a>&emsp;
+  <a href="{{ url_for('logout') }}">logout</a>
+{% endif %}
+
+<div id="content">{% block content %}{% endblock %}</div>
+</body>
+</html>

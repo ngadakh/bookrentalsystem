@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Reserve Books{% endblock %}
+
+{% block content %}
+<br>
+<div style="width:100%;">
+    <br>
+    <b>Book Reservation &emsp;
+    </b>
+    <br><br>
+    <form action="{{ url_for('book.reserve_book') }}" method="POST">
+        {% if books %}
+        <select id="select1" name="book_serial_no">
+            <option value="Select Book" selected>Select Book</option>
+            {% for book in books %}
+            <option value="{{ book.serial_no }}">{{ book.name }}</option>
+            {% endfor %}
+        </select>
+        {% else %}
+        No Books Found!
+        {% endif %}
+        <br><br>
+        {% if books %}
+        <select id="select2" name="customer_id">
+            <option value="Select Customer" selected>Select Customer</option>
+            {% for customer in customers %}
+            <option value="{{ customer.id }}">{{ customer.name }}</option>
+            {% endfor %}
+        </select><br><br>
+        <input type="submit" value="Reserve Book">
+        &emsp;&emsp;{% else %}
+        No Customers Found!
+        {% endif %}
+
+    </form>
+</div>
+{% endblock %}

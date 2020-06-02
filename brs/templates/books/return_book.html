@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}Return Books{% endblock %}
+
+{% block content %}
+<br>
+<b>Book Return &emsp;
+</b>
+<div id="alert">
+    {% if message %}
+    {{ message }}
+    {% endif %}
+</div>
+<br><br>
+<form action="{{ url_for('book.return_book') }}" method="POST">
+    {% if books %}
+    <table style="100%">
+        <tr width="50%" style="font-weight:bold;">
+            <td>Serial No</td>
+            <td>Book Name</td>
+            <td>Customer Name</td>
+            <td>Issue Date</td>
+            <td>Amount to pay</td>
+            <td>Action</td>
+        </tr>
+        {% for book in books %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ book.book.name}}</td>
+            <td>{{ book.customer.name}}</td>
+            <td>{{ book.issue_date}}</td>
+            <td>Rs.{{ book.rent_amount}}</td>
+            <td><a href="#"
+                   onclick="return_book({{ book.book.serial_no }}, {{ book.customer.id }}, '{{ book.issue_date}}', {{ book.rent_amount }})">Return
+                Book</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+    {% else %}
+    <br>
+    No Books Found!
+    {% endif %}
+</form>
+
+<script>
+$(document).ready(function() {
+setTimeout(function() {
+    $('#alert').fadeOut('slow');
+}, 2000); // <-- time in milliseconds
+});
+
+function return_book(book_id, customer_id, issue_date, rent_amount) {
+    	console.log(book_id, customer_id);
+    	$.ajax({
+            url: "{{url_for('book.return_book')}}",
+            type: 'POST',
+            data: {'book_serial_no': book_id,
+                   'customer_id': customer_id,
+                   'issue_date': issue_date,
+                   'amount': rent_amount
+                   },
+            success: function (data) {
+            window.location.href = "{{url_for('book.return_book', message="Book returned successfully")}}";
+			},
+			error: function (error) {
+				alert(error);
+			}
+        });
+    }
+
+	$("#select2").change(function(){
+        $.ajax({
+            url: "{{url_for('book.get_book_rental_and_issue_date')}}",
+            type: 'GET',
+            data: {'book_serial_no': $('#select1 option:selected').attr('value'),
+                   'customer_id': $('#select2 option:selected').attr('value')},
+            contentType: 'application/json',
+            success: function (data) {
+            	$('#issue_date').val(data[0]);
+				$('#amount').val(data[1]);
+			},
+			error: function (error) {
+				alert(error);
+			}
+        });
+    });
+
+
+</script>
+{% endblock %}

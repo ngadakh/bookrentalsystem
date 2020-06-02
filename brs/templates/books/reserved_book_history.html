@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Reserved Book History{% endblock %}
+
+{% block content %}
+<div>
+<br>
+<b>Reserved Book History &emsp;
+</b>
+<br><br>
+{% if books %}
+<table>
+    <tr width="50%" style="font-weight:bold;">
+        <td>Serial No</td>
+        <td>Book Name</td>
+        <td>Customer Name</td>
+        <td>Issue Date</td>
+    </tr>
+    {% for book in books %}
+    <tr>
+        <td>{{ book.id}}</td>
+        <td>{{ book.book.name}}</td>
+        <td>{{ book.customer.name}}</td>
+        <td>{{ book.issue_date}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+{% else %}
+<br>
+No Books Found!
+{% endif %}
+</div>
+{% endblock %}

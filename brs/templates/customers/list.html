@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Customer List{% endblock %}
+
+{% block content %}
+<br>
+<div style="width:100%;">
+    <br>
+    <b>Customer List &emsp;
+    </b>
+    <a href="{{ url_for('customer.add_customer') }}">Add New Customer</a>&emsp;
+    <br><br>
+    {% if customers %}
+    <table>
+        <tr style="font-weight:bold">
+            <td>Serial No</td>
+            <td>Name</td>
+            <td>Email</td>
+        </tr>
+        {% for customer in customers %}
+        <tr>
+            <td>{{ customer.id}}</td>
+            <td>{{ customer.name}}</td>
+            <td>{{ customer.email}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% else %}
+    No customer Found!
+    {% endif %}
+</div>
+{% endblock %}

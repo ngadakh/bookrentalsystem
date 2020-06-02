@@ -1,0 +1,32 @@
+{% if books %}
+<h3>Customer Name : {{ books[0].customer.name }}
+    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+    Date: {{ now_date }}
+</h3>
+<table>
+    <tr width="50%" style="font-weight:bold;">
+        <td>Serial No</td>
+        <td>Book Name</td>
+        <td>Duration(Days)</td>
+        <td>Rent Amount(Rs.)</td>
+    </tr>
+    {% for book in books %}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ book.book.name}}</td>
+        <td>{{ book.duration}}</td>
+        <td>{{ book.rent_amount}}</td>
+    </tr>
+    {% endfor %}
+</table>
+========================================================== <br>
+<h4>
+	&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+	TOTAL : Rs. {{ total_rent_amount }}
+</h4>
+
+{% else %}
+<br>
+No Books Found!
+{% endif %}
