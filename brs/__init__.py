@@ -7,7 +7,7 @@ from flask import redirect, url_for, session
 from werkzeug.utils import find_modules
 
 import config
-from brs.model import db
+from brs.models import db
 from brs.utils import BRSModule
 
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
@@ -27,6 +27,9 @@ class BRS(Flask):
                 if isinstance(module.__dict__[key], BRSModule):
                     yield module.__dict__[key]
 
+    def init_app(self):
+        pass
+
 
 def login_required(f):
     @wraps(f)
@@ -45,15 +48,15 @@ def create_app():
     :return: flask app
     """
     flask_app = BRS(__name__)
-    flask_app.config.from_object('config')
+    flask_app.config.from_object('config.ENVIRONMENT')
 
     # Set the SQLITE database file path
-    flask_app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{}'.format(config.SQLITE_PATH)
+    flask_app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{}'.format(config.ENVIRONMENT.SQLITE_PATH)
     db.init_app(flask_app)
 
     # Create database tables data models
     with flask_app.app_context():
-        from brs import model
+        from brs import models
         db.create_all()
 
     # Register blueprints for available modules like books & customer

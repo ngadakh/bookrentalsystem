@@ -21,14 +21,14 @@ def login():
         return render_template("login.html")
 
     username = flask.request.form['username']
-    if flask.request.form['password'] == config.USERS[username]['password']:
+    if flask.request.form['password'] == config.ENVIRONMENT.USERS['password']:
         session['logged_in'] = session['username'] = username
         return flask.redirect(flask.url_for('home'))
 
     return 'Login unsuccessful!!'
 
 
-@app.route('/logout')
+@app.route('/logout', methods=['GET'])
 @login_required
 def logout():
     session.clear()
@@ -37,12 +37,10 @@ def logout():
 
 def main():
     app.run(
-        host=config.DEFAULT_SERVER,
-        port=config.DEFAULT_SERVER_PORT,
+        host=config.ENVIRONMENT.DEFAULT_SERVER,
+        port=config.ENVIRONMENT.DEFAULT_SERVER_PORT,
     )
 
 
 if __name__ == '__main__':
-    import os
-    print(os.environ['APP_SETTINGS'])
     main()
