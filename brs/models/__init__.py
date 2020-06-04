@@ -12,17 +12,12 @@ db = SQLAlchemy()
 class Book(db.Model):
     serial_no = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=True, nullable=False)
-    book_type = db.Column(db.String(50), unique=True, nullable=False)
+    book_type = db.Column(db.String(50), nullable=False)
     author = db.Column(db.String(100), unique=True, nullable=False)
     quantity = db.Column(db.Integer)
 
     def __repr__(self):
         return "<Name of Book: {}>".format(self.name)
-
-#
-# class BookTypes(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     types = db.Column(db.String(100), unique=True, nullable=False)
 
 
 class Customer(db.Model):
@@ -62,12 +57,6 @@ class BookHistory(db.Model):
 class Settings(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     book_rental_charges = db.Column(db.String(120), unique=True, nullable=False)
-
-#
-# @event.listens_for(BookTypes.__table__, 'after_create')
-# def insert_initial_values(*args, **kwargs):
-#     db.session.add(BookTypes(types=json.dumps([{"types": ["Regular", "Fiction", "Novel"]}])))
-#     db.session.commit()
 
 
 @event.listens_for(Settings.__table__, 'after_create')
