@@ -3,10 +3,13 @@
     &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
     Date: {{ now_date }}
 </h3>
+Rent charges Book Type Wise(in Rs.) : {{rent_charges_book_type_wise}}
+<br><br>
 <table>
     <tr width="50%" style="font-weight:bold;">
         <td>Serial No</td>
         <td>Book Name</td>
+        <td>Book Type</td>
         <td>Duration(Days)</td>
         <td>Rent Amount(Rs.)</td>
     </tr>
@@ -14,6 +17,7 @@
     <tr>
         <td>{{ loop.index }}</td>
         <td>{{ book.book.name}}</td>
+        <td>{{ book.book.book_type}}</td>
         <td>{{ book.duration}}</td>
         <td>{{ book.rent_amount}}</td>
     </tr>
@@ -25,7 +29,6 @@
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 	TOTAL : Rs. {{ total_rent_amount }}
 </h4>
-
 {% else %}
 <br>
 No Books Found!

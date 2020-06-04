@@ -1,18 +1,19 @@
 # Utility file for book module
 
 import datetime
+import json
 
 from brs.models import Settings
 
 
-def calculate_book_rent(issue_date):
+def calculate_book_rent(issue_date, book_type):
     """
     This function use to calculate book rent
     :param issue_date: issue date / datetime object
     :return: rent amount / integer
     """
     days_duration = get_duration(issue_date)
-    amount = get_rental_settings()
+    amount = get_rental_settings()[book_type]
     rent_amount = days_duration * amount
     return rent_amount
 
@@ -41,8 +42,5 @@ def get_rental_settings():
     :return: rent_charges / integer
     """
     rent_charges = Settings.query.all()
-    if len(rent_charges) > 0:
-        rent_charges = rent_charges[0].book_rental_charges
-    if not rent_charges:
-        rent_charges = 0
+    rent_charges = json.loads(rent_charges[0].book_rental_charges)[0]['types']
     return rent_charges

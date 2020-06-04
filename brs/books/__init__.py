@@ -38,12 +38,14 @@ def add_new_book():
     :return: render book listing HTML page after adding the book
     """
     if flask.request.method == 'GET':
-        return render_template("/books/add.html")
+        book_types = get_rental_settings().keys()
+        return render_template("/books/add.html", book_types=book_types)
     if flask.request.method == 'POST':
         name = flask.request.form['name']
+        book_type = flask.request.form['book_type']
         author = flask.request.form['author']
         quantity = flask.request.form['quantity']
-        book = Book(name=name, author=author, quantity=quantity)
+        book = Book(name=name, book_type=book_type, author=author, quantity=quantity)
         db.session.add(book)
         db.session.commit()
 
@@ -96,14 +98,14 @@ def return_book():
         message = flask.request.args.get('message', None)
         books = ReserveBook.query.join(Book).all()
         for book in books:
-            rent_amount = calculate_book_rent(book.issue_date)
+            rent_amount = calculate_book_rent(book.issue_date, book.book.book_type)
             book.rent_amount = rent_amount
         return render_template("/books/return_book.html", books=books, message=message)
     if flask.request.method == 'POST':
         book_serial_no = int(flask.request.form['book_serial_no'])
         customer_id = int(flask.request.form['customer_id'])
         issue_date = parser.parse(flask.request.form['issue_date'])
-        rent_amt = int(flask.request.form['amount'])
+        rent_amt = float(flask.request.form['amount'])
 
         # Add record to ReturnBook table
         res_book = ReturnBook(book_id=book_serial_no, customer_id=customer_id, issue_date=issue_date,
@@ -170,10 +172,11 @@ def get_rent_statement():
         total_rent_amount = 0
         for book in books:
             book.duration = get_duration(book.issue_date)
-            book.rent_amount = calculate_book_rent(book.issue_date)
+            book.rent_amount = calculate_book_rent(book.issue_date, book.book.book_type)
             total_rent_amount += book.rent_amount
+        rent_charges_book_type_wise = get_rental_settings()
         return render_template("/customers/report.html", books=books, total_rent_amount=total_rent_amount,
-                               now_date=datetime.datetime.now())
+                               now_date=datetime.datetime.now(), rent_charges_book_type_wise=rent_charges_book_type_wise)
 
 
 @book_blueprint.route('/settings', methods=['GET', 'POST'])

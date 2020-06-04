@@ -11,12 +11,9 @@
         {{ message }}
         {% endif %}
     </div>
-    <br>
-    <form action="{{ url_for('book.settings') }}" method="POST">
-        <label for="rent">Book Rental Charges:</label>
-        Rs. <input type="text" id="rent" name="rent" value="{{settings}}">
-        <input type="submit" value="Update">
-    </form>
+        {% for i in settings %}
+    <b>{{ i }} Books : </b> Rs. {{ settings[i] }} <br>
+        {% endfor %}
 </div>
 <script>
 	$(document).ready(function() {
