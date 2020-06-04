@@ -31,8 +31,6 @@ def get_duration(issue_date):
     # Assume - if customer return the book on the same day we will charge him for one day duration
     if days_duration == 0:
         days_duration = 1
-    else:
-        days_duration = 1
 
     return days_duration
 
