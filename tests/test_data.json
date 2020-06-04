@@ -1,7 +1,7 @@
 {
   "book": {
-        "add_book": {"name": "ADD TEST BOOK", "author": "ADD TEST AUTHOR", "quantity": 100},
-        "reserve_book": {"name": "RESERVE TEST BOOK", "author": "RESERVE TEST AUTHOR", "quantity": 100}
+        "add_book": {"name": "ADD TEST BOOK", "book_type": "Regular" , "author": "ADD TEST AUTHOR", "quantity": 100},
+        "reserve_book": {"name": "RESERVE TEST BOOK", "book_type": "Regular", "author": "RESERVE TEST AUTHOR", "quantity": 100}
   },
   "customer": {
         "add_customer": {"name": "ADD TEST CUSTOMER", "email": "testcustomer@abc.com"}

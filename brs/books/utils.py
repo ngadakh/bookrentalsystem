@@ -14,7 +14,25 @@ def calculate_book_rent(issue_date, book_type):
     """
     days_duration = get_duration(issue_date)
     amount = get_rental_settings()[book_type]
-    rent_amount = days_duration * amount
+
+    if book_type == 'Regular':
+        if days_duration < 2:
+            amount = 2
+            rent_amount = days_duration * amount
+        else:
+            days_duration = days_duration - 2
+            amount = days_duration * amount
+            # For first 2 days charge will be Rs. 1
+            rent_amount = amount + 1
+    elif book_type == 'Novel':
+        if days_duration < 3:
+            amount = 4.5
+            rent_amount = days_duration * amount
+        else:
+            rent_amount = days_duration * amount
+    else:
+        rent_amount = days_duration * amount
+
     return rent_amount
 
 
@@ -32,6 +50,8 @@ def get_duration(issue_date):
     # Assume - if customer return the book on the same day we will charge him for one day duration
     if days_duration == 0:
         days_duration = 1
+    else:
+        days_duration += 1
 
     return days_duration
 

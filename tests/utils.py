@@ -3,7 +3,9 @@ from .conftest import test_data
 
 
 def add_book():
-    book = Book(name=test_data['book']['reserve_book']['name'], author=test_data['book']['reserve_book']['author'],
+    book = Book(name=test_data['book']['reserve_book']['name'],
+                book_type=test_data['book']['reserve_book']['book_type'],
+                author=test_data['book']['reserve_book']['author'],
                 quantity=test_data['book']['reserve_book']['quantity'])
     db.session.add(book)
     db.session.commit()
@@ -22,4 +24,9 @@ def add_customer():
 
 def delete_customer(customer_id):
     db.session.query(Customer).filter(Customer.id == customer_id).delete()
+    db.session.commit()
+
+
+def delete_book(book_id):
+    db.session.query(Book).filter(Book.serial_no == book_id).delete()
     db.session.commit()

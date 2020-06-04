@@ -31,4 +31,5 @@ def test_reserve_book(client, auth):
     assert response.status_code == 200
     assert b'Book reserved successfully.' in response.data
 
+    # utils.delete_book(book_serial_no)
     utils.delete_customer(customer_id)

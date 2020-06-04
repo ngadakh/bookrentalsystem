@@ -32,4 +32,4 @@ class TestingConfig(Config):
 
 
 ENVIRONMENT = DevelopmentConfig
-# ENVIRONMENT = TestingConfig
+#ENVIRONMENT = TestingConfig
